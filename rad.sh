@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+cd $(pwd)
+token=$TELEGRAM_TOKEN
+WD=$(pwd)
+IMG=${WD}"/out/arch/arm64/boot/Image.gz-dtb"
+DATE="`date +%d%m%Y-%H%M%S`"
+cd ${WD}
+export ARCH=arm64
+export SUBARCH=arm64
+export KBUILD_BUILD_HOST=hololive
+export KBUILD_BUILD_USER="SuiseiKawaii"
 function cloneDEP() {
 if [ "${COMPILER}" == "gcc10" ]; then
 git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
@@ -42,18 +52,6 @@ fi
 }
 function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
-}
-function initialize() {
-cd $(pwd)
-token=$TELEGRAM_TOKEN
-WD=$(pwd)
-IMG=${WD}"/out/arch/arm64/boot/Image.gz-dtb"
-DATE="`date +%d%m%Y-%H%M%S`"
-cd ${WD}
-export ARCH=arm64
-export SUBARCH=arm64
-export KBUILD_BUILD_HOST=hololive
-export KBUILD_BUILD_USER="SuiseiKawaii"
 }
 function compile() {
 START=$(date +"%s")
@@ -139,7 +137,7 @@ for i in "$@"; do
         ;;
     esac
 done
-initialize
+# initialize
 cloneDEP
 cloneAK
 sendInfo
