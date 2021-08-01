@@ -42,6 +42,7 @@ function cloneAK(){
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function initialize(){
+cd $(pwd)
 TGtoken=$TELEGRAM_TOKEN
 WD=$(pwd)
 IMG=${WD}"/out/arch/arm64/boot/Image.gz-dtb"
@@ -67,7 +68,7 @@ else
 fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
-function zipKerne(){
+function zipKernel(){
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
@@ -78,6 +79,8 @@ elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
 zip -r9 personal-fakerad-${DATE}.zip *
 fi
 cd ..
+END=$(date +"%s")
+DIFF=$(($END - $START))
 }
 function push() {
 cd AnyKernel
@@ -134,3 +137,10 @@ for i in "$@"; do
         ;;
     esac
 done
+initialize
+cloneDEP
+cloneAK
+sendInfo
+compile
+zipKernel
+push
