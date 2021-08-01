@@ -45,7 +45,7 @@ git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function initialize() {
 cd $(pwd)
-TGtoken=$TELEGRAM_TOKEN
+token=$TELEGRAM_TOKEN
 WD=$(pwd)
 IMG=${WD}"/out/arch/arm64/boot/Image.gz-dtb"
 DATE="`date +%d%m%Y-%H%M%S`"
@@ -95,7 +95,7 @@ ZIP=$(echo *.zip)
 	cd ..
 }
 function sendInfo() {
-curl -s -X POST "https://api.telegram.org/bot1628360095:AAF947lAXmKVaw9jRpx-CURb_wK2FZKl9z8/sendMessage" \
+curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="-1001214166550" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
