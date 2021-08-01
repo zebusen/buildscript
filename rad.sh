@@ -119,7 +119,7 @@ for i in "$@"; do
         shift
         ;;
     --gcc-eva)
-        GCC_BRANCH="gcc-eva"
+        COMPILER="gcc-eva"
         shift
         ;;
     --aosp-clang)
