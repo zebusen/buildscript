@@ -39,6 +39,7 @@ COMPILER_STRING="$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1)"
 export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 fi
 # END ///////////////////////
+}
 function cloneAK(){
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
