@@ -40,10 +40,10 @@ export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 fi
 # END ///////////////////////
 }
-function cloneAK(){
+function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
-function initialize(){
+function initialize() {
 cd $(pwd)
 TGtoken=$TELEGRAM_TOKEN
 WD=$(pwd)
@@ -55,7 +55,7 @@ export SUBARCH=arm64
 export KBUILD_BUILD_HOST=hololive
 export KBUILD_BUILD_USER="SuiseiKawaii"
 }
-function compile(){
+function compile() {
 START=$(date +"%s")
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
@@ -70,7 +70,7 @@ else
 fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
-function zipKernel(){
+function zipKernel() {
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
