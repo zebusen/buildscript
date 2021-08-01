@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 function cloneDEP() {
 if [ "${COMPILER}" == "gcc10" ]; then
 git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
@@ -144,3 +145,4 @@ sendInfo
 compile
 zipKernel
 push
+# ///////////////////// END //////////////////////
