@@ -35,22 +35,66 @@ elif [ "${COMPILER}" == "proton-clang" ]; then
 git clone --depth=1 --quiet https://github.com/kdrag0n/proton-clang clang
 cd ${WD}
 COMPILER_STRING="$(${KERNEL_DIR}/clang/bin/clang --version | head -n 1)"
-export KBUILD_COMPILER_STRING="${COMPILER_STRING}
-# END ///////////////////////////////
-}
+export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
+fi
+# END ///////////////////////
 function cloneAK(){
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function initialize(){
 TGtoken=$TELEGRAM_TOKEN
 WD=$(pwd)
+IMG=${WD}"/out/arch/arm64/boot/Image.gz-dtb"
 DATE="`date +%d%m%Y-%H%M%S`"
-START=$(date +"%s")
 cd ${WD}
 export ARCH=arm64
 export SUBARCH=arm64
 export KBUILD_BUILD_HOST=hololive
 export KBUILD_BUILD_USER="SuiseiKawaii"
+}
+function compile(){
+START=$(date +"%s")
+make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
+if [ "${COMPILER}" == "aosp-clang" ]; then
+    make -j$(nproc) O=out CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
+elif [ "${COMPILER}" == "proton-clang" ]; then
+    make -j$(nproc) O=out \
+                CC=clang
+               CROSS_COMPILE=aarch64-linux-gnu- \
+               CROSS_COMPILE_ARM32=arm-linux-gnueabi-
+else
+    make -j$(nproc) O=out
+fi
+cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
+}
+function zipKerne(){
+DATE="`date +%d%m%H%M`"
+cd "${WD}"/AnyKernel
+if [ "${CONFIG}" == "whyred_defconfig" ]; then
+zip -r9 personal-oldcam-radeas-${DATE}.zip *
+elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
+zip -r9 personal-newcam-radeas-${DATE}.zip *
+elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
+zip -r9 personal-fakerad-${DATE}.zip *
+fi
+cd ..
+}
+function push() {
+cd AnyKernel
+ZIP=$(echo *.zip)
+ curl -F document=@$ZIP "https://api.telegram.org/bot$token/sendDocument" \
+        -F chat_id="-1001214166550" \
+        -F "disable_web_page_preview=true" \
+        -F "parse_mode=html" \
+        -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>WHYRED</b> | using ${COMPILER_STRING} | ${DATE}"
+	cd ..
+}
+function sendInfo() {
+curl -s -X POST "https://api.telegram.org/bot1628360095:AAF947lAXmKVaw9jRpx-CURb_wK2FZKl9z8/sendMessage" \
+        -d chat_id="-1001214166550" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=html" \
+        -d text="Started build ${DATE} using ${COMPILER}"
 }
 # theradcolor/lazyscripts
 for i in "$@"; do
