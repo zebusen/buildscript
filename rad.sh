@@ -57,7 +57,7 @@ function compile() {
 START=$(date +"%s")
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
-    make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
+    make -j$(nproc) O=out ARCH=arm64 CC=clang CLANG_TRIPLE=aarch64-linux-gnu-
 elif [ "${COMPILER}" == "proton-clang" ]; then
     make -j$(nproc) O=out \
     		ARCH=arm64 \
