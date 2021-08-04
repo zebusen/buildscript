@@ -55,7 +55,7 @@ git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function compile() {
 START=$(date +"%s")
-make -j$(nproc) O=out ARCH=arm64 whyred_defconfig
+make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
     make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
@@ -74,13 +74,11 @@ function zipKernel() {
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
-zip -r9 personal-oldcam-guai-eas-${DATE}.zip *
+zip -r9 personal-oldcam-guaieas-${DATE}.zip *
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
-zip -r9 personal-newcam-guai-eas-${DATE}.zip *
+zip -r9 personal-newcam-radeas-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
-zip -r9 personal-fakeguai-${DATE}.zip *
-else
-zip -r9 personal-oldcam-guai-eas-${DATE}.zip *
+zip -r9 personal-fakerad-${DATE}.zip *
 fi
 cd ..
 END=$(date +"%s")
