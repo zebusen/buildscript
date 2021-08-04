@@ -55,7 +55,7 @@ git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function compile() {
 START=$(date +"%s")
-make -j$(nproc) O=out ARCH=arm64 whyred-perf_defconfig
+make -j$(nproc) O=out ARCH=arm64 whyred_defconfig
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
     make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
@@ -73,7 +73,7 @@ cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 function zipKernel() {
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
-if [ "${CONFIG}" == "whyred-perf_defconfig" ]; then
+if [ "${CONFIG}" == "whyred_defconfig" ]; then
 zip -r9 personal-oldcam-guai-eas-${DATE}.zip *
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam-guai-eas-${DATE}.zip *
@@ -107,7 +107,7 @@ curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
 for i in "$@"; do
     case $i in
     --oldcam)
-        CONFIG="whyred-perf_defconfig"
+        CONFIG="whyred_defconfig"
         shift
         ;;
     --newcam)
