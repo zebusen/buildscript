@@ -73,7 +73,7 @@ cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 function zipKernel() {
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
-if [ "${CONFIG}" == "whyred_defconfig" ]; then
+if [ "${CONFIG}" == "whyred-perf_defconfig" ]; then
 zip -r9 personal-oldcam-guai-eas-${DATE}.zip *
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam-guai-eas-${DATE}.zip *
