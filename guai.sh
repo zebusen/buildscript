@@ -55,7 +55,7 @@ git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function compile() {
 START=$(date +"%s")
-make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
+make -j$(nproc) O=out ARCH=arm64 whyred-perf_defconfig
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
     make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
@@ -79,6 +79,8 @@ elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam-guai-eas-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
 zip -r9 personal-fakeguai-${DATE}.zip *
+else
+zip -r9 personal-oldcam-guai-eas-${DATE}.zip *
 fi
 cd ..
 END=$(date +"%s")
