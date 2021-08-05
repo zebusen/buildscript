@@ -55,7 +55,7 @@ git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function date_the_localversion(){
 DATE="`date +%d%m%H%M`"
-sed -i 's/CONFIG_LOCALVERSION="-rad-x5.6.2"/CONFIG_LOCALVERSION="-rad-eas-${DATE}"/g' arch/arm64/configs/whyred_defconfig 
+sed -i 's/CONFIG_LOCALVERSION="-rad-x5.6.2"/CONFIG_LOCALVERSION="-rad-eas-$DATE"/g' arch/arm64/configs/whyred_defconfig 
 }
 function compile() {
 START=$(date +"%s")
