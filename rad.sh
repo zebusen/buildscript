@@ -53,6 +53,10 @@ fi
 function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
+function date_the_localversion(){
+DATE="`date +%d%m%H%M`"
+sed -i 's/CONFIG_LOCALVERSION="-rad-x5.6.2"/CONFIG_LOCALVERSION="-rad-eas-${DATE}"/g' arch/arm64/configs/whyred_defconfig 
+}
 function compile() {
 START=$(date +"%s")
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
@@ -142,6 +146,7 @@ done
 # initialize
 cloneDEP
 cloneAK
+date_the_localversion
 sendInfo
 compile
 zipKernel
