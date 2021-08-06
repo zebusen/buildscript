@@ -118,7 +118,7 @@ curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="-1001214166550" \
         -d "disable_web_page_preview=true" \
         -d "parse_mode=html" \
-        -d text="Started build ${DATE} using ${COMPILER}"
+        -d text="Started build ${DATE} using ${COMPILER} ${GCC_BRANCH}"
 }
 # theradcolor/lazyscripts
 for i in "$@"; do
