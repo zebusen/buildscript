@@ -10,9 +10,14 @@ export SUBARCH=arm64
 export KBUILD_BUILD_HOST=hololive
 export KBUILD_BUILD_USER="SuiseiKawaii"
 function cloneDEP() {
-if [ "${COMPILER}" == "gcc10" ]; then
-git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
-git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b gnu-gcc-10 gcc32
+if [ "${COMPILER}" == "gcc-gnu" ]; then
+	if [ "${LTO}" == "true" ]; then
+	git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b master gcc64
+	git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b master gcc32
+	else
+	git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
+	git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b gnu-gcc-10 gcc32
+	fi
 cd ${WD}
 COMPILER_STRING="$(${WD}"/gcc64/bin/aarch64-linux-gnu-gcc" --version | head -n 1)"
 export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
@@ -134,8 +139,8 @@ for i in "$@"; do
         CONFIG="fakerad_defconfig"
         shift
         ;;
-    --gcc10)
-        COMPILER="gcc10"
+    --gcc-gnu)
+        COMPILER="gcc-gnu"
         shift
         ;;
     --gcc-eva)
