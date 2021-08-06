@@ -11,22 +11,36 @@ export KBUILD_BUILD_HOST=hololive
 export KBUILD_BUILD_USER="SuiseiKawaii"
 function cloneDEP() {
 if [ "${COMPILER}" == "gcc-gnu" ]; then
-	if [ "${LTO}" == "true" ]; then
-	git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b master gcc64
-	git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b master gcc32
-	else
-	git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
-	git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b gnu-gcc-10 gcc32
-	fi
+if [ "${GCC_BRANCH}" == "gnu-12" ]; then
+git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b master gcc64
+git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b master gcc32
+elif [ "${GCC_BRANCH}" == "gnu-10" ]; then
+git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
+git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b gnu-gcc-10 gcc32
+else
+git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b gnu-gcc-10 gcc64
+git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b gnu-gcc-10 gcc32
+fi
 cd ${WD}
 COMPILER_STRING="$(${WD}"/gcc64/bin/aarch64-linux-gnu-gcc" --version | head -n 1)"
 export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 export CROSS_COMPILE=$WD"/gcc64/bin/aarch64-linux-gnu-"
 export CROSS_COMPILE_ARM32=$WD"/gcc32/bin/arm-linux-gnueabi-"
 # /////////////////////////////
-elif [ "${COMPILER}" == "gcc-eva" ]; then
+elif [ "${COMPILER}" == "gcc-elf" ]; then
+if [ "${GCC_BRANCH}" == "eva" ]; then
 git clone --depth=1 --quiet https://github.com/mvaisakh/gcc-arm.git -b gcc-master gcc32
 git clone --depth=1 --quiet https://github.com/mvaisakh/gcc-arm64.git -b gcc-master gcc64
+elif [ "${GCC_BRANCH}" == "silont-10" ]; then
+git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/10 gcc64
+git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/10 gcc32
+elif [ "${GCC_BRANCH}" == "silont-11" ]; then
+git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/11 gcc64
+git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/11 gcc32
+else
+git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/10 gcc64
+git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/10 gcc32
+fi
 cd ${WD}
 COMPILER_STRING="$(${WD}"/gcc64/bin/aarch64-elf-gcc" --version | head -n 1)"
 export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
@@ -58,25 +72,7 @@ fi
 function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
-function lto_patch(){
-if [ "${COMPILER}" == "gcc-gnu" ] || [ "${COMPILER}" == "gcc-eva" ]; then
-curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-gcc-lto-patch.patch | git am
-rm -rf *.patch
-# /////////////////////////////
-elif [ "${COMPILER}" == "aosp-clang" ]; then
-curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
-# ///////////////////////////
-elif [ "${COMPILER}" == "proton-clang" ]; then
-curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
-# ///////////////////////////
-else
-echo "Compiler not found"
-fi
-}
 function compile() {
-if [ "${LTO}" == "true" ]; then
-lto_patch
-fi
 START=$(date +"%s")
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
@@ -143,8 +139,8 @@ for i in "$@"; do
         COMPILER="gcc-gnu"
         shift
         ;;
-    --gcc-eva)
-        COMPILER="gcc-eva"
+    --gcc-elf)
+        COMPILER="gcc-elf"
         shift
         ;;
     --aosp-clang)
@@ -155,10 +151,25 @@ for i in "$@"; do
         COMPILER="proton-clang"
         shift
         ;;
-    --lto)
-    	LTO="true"
+    --gnu-10)
+    	GCC_BRANCH="gnu-10"
+    	shift
+	;;
+    --gnu-12)
+    	GCC_BRANCH="gnu-12"
 	shift
 	;;
+    --eva)
+    	GCC_BRANCH="eva"
+	shift
+	;;
+    --silont-10)
+    	GCC_BRANCH="silont-10"
+	shift
+	;;
+    --silont-12)
+    	GCC_BRANCH="silont-12"
+	shift	
     *)
         # unknown option
         echo "Unknown option(s)"
