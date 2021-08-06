@@ -167,8 +167,8 @@ for i in "$@"; do
     	GCC_BRANCH="silont-10"
 	shift
 	;;
-    --silont-12)
-    	GCC_BRANCH="silont-12"
+    --silont-11)
+    	GCC_BRANCH="silont-11"
 	shift	
     *)
         # unknown option
