@@ -59,7 +59,7 @@ function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
 function lto_patch(){
-if [ "${COMPILER}" == "gcc10" ] || [ "${COMPILER}" == "gcc-eva" ]; then
+if [ "${COMPILER}" == "gcc-gnu" ] || [ "${COMPILER}" == "gcc-eva" ]; then
 curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-gcc-lto-patch.patch | git am
 rm -rf *.patch
 # /////////////////////////////
