@@ -66,7 +66,7 @@ elif [ "${COMPILER}" == "proton-clang" ]; then
                 CROSS_COMPILE=aarch64-linux-gnu- \
                 CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 else
-    make -j$(nproc) O=out ARCH=arm64 LD=ld.lld
+    make -j$(nproc) O=out ARCH=arm64
 fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
