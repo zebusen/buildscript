@@ -53,7 +53,25 @@ fi
 function cloneAK() {
 git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
 }
+function lto_patch(){
+if [ "${COMPILER}" == "gcc10" ] || [ "${COMPILER}" == "gcc-eva" ]; then
+curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-gcc-lto-patch.patch | git am
+rm -rf *.patch
+# /////////////////////////////
+elif [ "${COMPILER}" == "aosp-clang" ]; then
+curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
+# ///////////////////////////
+elif [ "${COMPILER}" == "proton-clang" ]; then
+curl https://raw.githubusercontent.com/theradcolor/patches/master/rad-kernel-clang-lto-patch.patch | git am
+# ///////////////////////////
+else
+echo "Compiler not found"
+fi
+}
 function compile() {
+if [ "${LTO}" == "true" ]; then
+lto_patch
+fi
 START=$(date +"%s")
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
@@ -132,6 +150,10 @@ for i in "$@"; do
         COMPILER="proton-clang"
         shift
         ;;
+    --lto)
+    	LTO="true"
+	shift
+	;;
     *)
         # unknown option
         echo "Unknown option(s)"
