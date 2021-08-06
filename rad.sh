@@ -169,7 +169,8 @@ for i in "$@"; do
 	;;
     --silont-11)
     	GCC_BRANCH="silont-11"
-	shift	
+	shift
+	;;
     *)
         # unknown option
         echo "Unknown option(s)"
