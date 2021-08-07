@@ -93,7 +93,11 @@ function zipKernel() {
 DATE="`date +%d%m%H%M`"
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
+if [ "${SLMK}" == "true" ]; then
+zip -r9 personal-oldcam-radeas-slmk-${DATE}.zip *
+else
 zip -r9 personal-oldcam-radeas-${DATE}.zip *
+fi
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam-radeas-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
@@ -169,6 +173,10 @@ for i in "$@"; do
 	;;
     --silont-11)
     	GCC_BRANCH="silont-11"
+	shift
+	;;
+    --slmk)
+    	SLMK="true"
 	shift
 	;;
     *)
