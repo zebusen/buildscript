@@ -57,7 +57,7 @@ mkdir clang
     tar -xzf clang*
     cd .. || exit
 cd ${WD}
- COMPILER_STRING="$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
+COMPILER_STRING="$(${CC} --version | head -n 1 | perl -pe 's/\(http.*?\)//gs' | sed -e 's/  */ /g')"
 export KBUILD_COMPILER_STRING="${COMPILER_STRING}"
 export CROSS_COMPILE=$WD"/gcc64/bin/aarch64-linux-gnu-"
 export CROSS_COMPILE_ARM32=$WD"/gcc32/bin/arm-linux-gnueabi-"
