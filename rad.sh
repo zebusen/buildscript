@@ -102,7 +102,7 @@ if [ "${CONFIG}" == "whyred_defconfig" ]; then
 if [ "${SLMK}" == "true" ]; then
 zip -r9 personal-oldcam-radeas-slmk${UCLAMP_NAME}-${DATE}.zip *
 else
-zip -r9 personal-oldcam-radeas-${DATE}.zip *
+zip -r9 personal-oldcam-radeas${UCLAMP_NAME}-${DATE}.zip *
 fi
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam-radeas${UCLAMP_NAME}-${DATE}.zip *
