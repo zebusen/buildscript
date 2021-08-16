@@ -125,7 +125,7 @@ ZIP=$(echo *.zip)
 }
 function sendInfo() {
 suffix="_defconfig"
-TYPE="$({CONFIG} | sed -e 's/^$suffix$//g')"
+TYPE=$(echo "$CONFIG" | sed -e 's/^$suffix$//g')
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="-1001214166550" \
         -d "disable_web_page_preview=true" \
