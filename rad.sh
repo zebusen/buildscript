@@ -124,8 +124,6 @@ ZIP=$(echo *.zip)
 	cd ..
 }
 function sendInfo() {
-suffix="_defconfig"
-TYPE=$(echo "$CONFIG" | sed -e 's/^$suffix$//g')
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
         -d chat_id="-1001214166550" \
         -d "disable_web_page_preview=true" \
@@ -137,14 +135,17 @@ for i in "$@"; do
     case $i in
     --oldcam)
         CONFIG="whyred_defconfig"
+	TYPE="oldcam"
         shift
         ;;
     --newcam)
         CONFIG="whyred-newcam_defconfig"
+	TYPE="newcam"
         shift
         ;;
     --fakerad)
         CONFIG="fakerad_defconfig"
+	TYPE="fakerad"
         shift
         ;;
     --gcc-gnu)
