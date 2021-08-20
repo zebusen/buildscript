@@ -78,6 +78,7 @@ function modify() {
 
 # Devfreq_boost frequency
 # sed -i 's/CONFIG_DEVFREQ_MSM_CPUBW_BOOST_FREQ=2597/CONFIG_DEVFREQ_MSM_CPUBW_BOOST_FREQ=1571/g' arch/arm64/configs/${CONFIG}
+echo "Nothing to see here"
 }
 function compile() {
 START=$(date +"%s")
@@ -208,7 +209,7 @@ done
 # initialize
 cloneDEP
 cloneAK
-modify
+# modify
 sendInfo
 compile
 zipKernel
