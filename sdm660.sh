@@ -31,6 +31,9 @@ elif [ "${COMPILER}" == "gcc-elf" ]; then
 if [ "${GCC_BRANCH}" == "eva" ]; then
 git clone --depth=1 --quiet https://github.com/mvaisakh/gcc-arm.git -b gcc-master gcc32
 git clone --depth=1 --quiet https://github.com/mvaisakh/gcc-arm64.git -b gcc-master gcc64
+elif [ "${GCC_BRANCH}" == "elf-10" ]; then
+git clone --depth=1 --quiet https://github.com/fiqri19102002/aarch64-gcc.git -b elf-gcc-10 gcc64
+git clone --depth=1 --quiet https://github.com/fiqri19102002/arm-gcc.git -b elf-gcc-10 gcc32
 elif [ "${GCC_BRANCH}" == "silont-10" ]; then
 git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/10 gcc64
 git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/10 gcc32
@@ -189,6 +192,10 @@ for i in "$@"; do
 	;;
     --silont-11)
     	GCC_BRANCH="silont-11"
+	shift
+	;;
+    --elf-10)
+    	GCC_BRANCH="elf-10"
 	shift
 	;;
     --slmk)
