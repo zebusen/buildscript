@@ -108,7 +108,7 @@ else
 UCLAMP_NAME=""
 fi
 cd "${WD}"/AnyKernel
-if [ "${CONFIG}" == "whyred_defconfig" ]; then
+if [ "${CONFIG}" == "whyred-perf_defconfig" ]; then
 if [ "${SLMK}" == "true" ]; then
 zip -r9 personal${BRANCH}-oldcam-whyred-slmk${UCLAMP_NAME}-${DATE}.zip *
 else
