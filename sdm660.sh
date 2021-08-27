@@ -40,6 +40,15 @@ git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -
 elif [ "${GCC_BRANCH}" == "silont-11" ]; then
 git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/11 gcc64
 git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/11 gcc32
+elif [ "${GCC_BRANCH}" == "arter-10" ]; then
+git clone --depth=1 --quiet https://github.com/arter97/arm64-gcc -b master gcc64
+cd gcc64
+git checkout c454ee9f895f3ad6236401c05bd9a9904f29c228
+cd ..
+git clone --depth=1 --quiet https://github.com/arter97/arm32-gcc -b master gcc32
+cd gcc32
+git checkout 6d2b7128d4a5c60e570b29e7cc40629bc88f3fe1
+cd ..
 else
 git clone --depth=1 --quiet https://github.com/silont-project/aarch64-elf-gcc.git -b arm64/10 gcc64
 git clone --depth=1 --quiet https://github.com/silont-project/arm-eabi-gcc.git -b arm/10 gcc32
@@ -196,6 +205,10 @@ for i in "$@"; do
 	;;
     --elf-10)
     	GCC_BRANCH="elf-10"
+	shift
+	;;
+    --arter-10)
+    	GCC_BRANCH="arter-10"
 	shift
 	;;
     --slmk)
