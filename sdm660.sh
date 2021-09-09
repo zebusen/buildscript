@@ -104,7 +104,9 @@ fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
 function zipKernel() {
+if [ "${HMP}" != "hmp" ]; then
 HMP="-eas"
+fi
 DATE="`date +%d%m%H%M`"
 if [ "${UCLAMP}" == "true" ]; then
 UCLAMP_NAME="-uclamp"
