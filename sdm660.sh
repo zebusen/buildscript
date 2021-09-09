@@ -104,6 +104,7 @@ fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
 function zipKernel() {
+HMP="-eas"
 DATE="`date +%d%m%H%M`"
 if [ "${UCLAMP}" == "true" ]; then
 UCLAMP_NAME="-uclamp"
@@ -113,14 +114,14 @@ fi
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
 if [ "${SLMK}" == "true" ]; then
-zip -r9 personal${BRANCH}-oldcam-whyred-slmk${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal${BRANCH}-oldcam-whyred${HMP}-slmk${UCLAMP_NAME}-${DATE}.zip *
 else
-zip -r9 personal${BRANCH}-oldcam-whyred${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal${BRANCH}-oldcam-whyred${HMP}${UCLAMP_NAME}-${DATE}.zip *
 fi
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
-zip -r9 personal-newcam${BRANCH}-whyred${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal-newcam${BRANCH}-whyred${HMP}${UCLAMP_NAME}-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
-zip -r9 personal${BRANCH}-whyred{UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal${BRANCH}-whyred${HMP}{UCLAMP_NAME}-${DATE}.zip *
 fi
 cd ..
 END=$(date +"%s")
@@ -215,6 +216,10 @@ for i in "$@"; do
 	;;
     --sdm660)
     	BRANCH="-sdm660"
+	shift
+	;;
+    --hmp)
+    	HMP="hmp"
 	shift
 	;;
     *)
