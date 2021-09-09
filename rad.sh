@@ -100,6 +100,7 @@ fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
 function zipKernel() {
+HMP="eas"
 DATE="`date +%d%m%H%M`"
 if [ "${UCLAMP}" == "true" ]; then
 UCLAMP_NAME="-uclamp"
@@ -109,12 +110,12 @@ fi
 cd "${WD}"/AnyKernel
 if [ "${CONFIG}" == "whyred_defconfig" ]; then
 if [ "${SLMK}" == "true" ]; then
-zip -r9 personal-oldcam-radeas-slmk${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal-oldcam-rad${HMP}-slmk${UCLAMP_NAME}-${DATE}.zip *
 else
-zip -r9 personal-oldcam-radeas${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal-oldcam-rad{HMP}${UCLAMP_NAME}-${DATE}.zip *
 fi
 elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
-zip -r9 personal-newcam-radeas${UCLAMP_NAME}-${DATE}.zip *
+zip -r9 personal-newcam-rad${HMP}${UCLAMP_NAME}-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
 zip -r9 personal-fakerad${UCLAMP_NAME}-${DATE}.zip *
 fi
@@ -203,6 +204,10 @@ for i in "$@"; do
 	;;
     --uclamp)
     	UCLAMP="true"
+	shift
+	;;
+    --hmp)
+    	HMP="hmp"
 	shift
 	;;
     *)
