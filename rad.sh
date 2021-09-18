@@ -101,7 +101,7 @@ fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
 function zipKernel() {
-if [ "${HMP}" != "hmp" ]; then
+if [ "${HMP}" != "hmp" ] || [ "${HMP}" == "" ]; then
 HMP="eas"
 fi
 DATE="`date +%d%m%H%M`"
