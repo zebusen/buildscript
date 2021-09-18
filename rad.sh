@@ -96,7 +96,11 @@ elif [ "${COMPILER}" == "proton-clang" ]; then
                 CROSS_COMPILE=aarch64-linux-gnu- \
                 CROSS_COMPILE_ARM32=arm-linux-gnueabi-
 else
-    make -j$(nproc) O=out ARCH=arm64
+	if [ "${LLD}" == "true" ] || [ "${GCC_BRANCH}" == "eva" ]; then
+		make -j$(nproc) O=out ARCH=arm64 LD=ld.lld
+	else
+	make -j$(nproc) O=out ARCH=arm64
+	fi
 fi
 cp ${WD}/out/arch/arm64/boot/Image.gz-dtb ${WD}/AnyKernel
 }
@@ -211,6 +215,10 @@ for i in "$@"; do
 	;;
     --hmp)
     	HMP="hmp"
+	shift
+	;;
+    --lld)
+    	LLD="true"
 	shift
 	;;
     *)
