@@ -139,7 +139,7 @@ ZIP=$(echo *.zip)
         -F "disable_web_page_preview=true" \
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>WHYRED</b> | using ${COMPILER_STRING} | ${DATE}"
-	cd ..
+	# cd ..
  curl -F transfer=@$ZIP "https://transfer.sh/zebusen.zip"
 }
 function sendInfo() {
