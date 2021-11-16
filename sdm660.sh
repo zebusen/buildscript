@@ -140,7 +140,8 @@ ZIP=$(echo *.zip)
         -F "parse_mode=html" \
         -F caption="Build took $(($DIFF / 60)) minute(s) and $(($DIFF % 60)) second(s). | For <b>WHYRED</b> | using ${COMPILER_STRING} | ${DATE}"
 	# cd ..
- curl -i -F transfer=@$ZIP "https://transfer.sh/zebusen.zip"
+ # curl -i -F transfer=@$ZIP "https://transfer.sh/zebusen.zip"
+ curl --upload-file $ZIP "https://transfer.sh/zebusen.zip"
 }
 function sendInfo() {
 curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
