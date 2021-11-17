@@ -61,7 +61,8 @@ mkdir clang
     # wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master/clang-r416183b.tar.gz
     # wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/master/clang-r428724.tar.gz
     # wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/c3260b409f13d92f8c9f4795420238694c529352/clang-r416183c1.tar.gz
-    wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/a7b90d1ea59f1c958ea523c9d69ec94b600f7b43/clang-r433403b.tar.gz
+    # wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/a7b90d1ea59f1c958ea523c9d69ec94b600f7b43/clang-r433403b.tar.gz
+    wget -q https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/3a785d33320c48b09f7d6fcf2a37fed702686fdc/clang-r437112.tar.gz
     tar -xzf clang*
     cd .. || exit
 cd ${WD}
