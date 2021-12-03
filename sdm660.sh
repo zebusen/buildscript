@@ -215,7 +215,7 @@ for i in "$@"; do
 	shift
 	;;
     --arter-11)
-    	GCC_BRANCH="arter-10"
+    	GCC_BRANCH="arter-11"
 	shift
 	;;
     --slmk)
