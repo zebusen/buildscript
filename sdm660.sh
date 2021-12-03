@@ -91,6 +91,9 @@ echo "Nothing to see here"
 }
 function compile() {
 START=$(date +"%s")
+if [ "${FourNineteen}" == "true" ]; then
+CONFIG="vendor/$CONFIG"
+fi
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
@@ -127,6 +130,8 @@ elif [ "${CONFIG}" == "whyred-newcam_defconfig" ]; then
 zip -r9 personal-newcam${BRANCH}-whyred${HMP}${UCLAMP_NAME}-${DATE}.zip *
 elif [ "${CONFIG}" == "fakerad_defconfig" ]; then
 zip -r9 personal${BRANCH}-whyred${HMP}{UCLAMP_NAME}-${DATE}.zip *
+else
+zip -r9 personal-whyred-${DATE}.zip *
 fi
 cd ..
 END=$(date +"%s")
@@ -227,6 +232,10 @@ for i in "$@"; do
 	;;
     --hmp)
     	HMP="hmp"
+	shift
+	;;
+    --4-19)
+    	FourNineteen="true"
 	shift
 	;;
     *)
