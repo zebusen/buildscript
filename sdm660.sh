@@ -92,7 +92,7 @@ echo "Nothing to see here"
 function compile() {
 START=$(date +"%s")
 if [ "${FourNineteen}" == "true" ]; then
-CONFIG="vendor/$CONFIG"
+CONFIG="vendor/whyred_defconfig"
 fi
 make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
 if [ "${COMPILER}" == "aosp-clang" ]; then
