@@ -88,7 +88,8 @@ echo "modify configs using sed"
 }
 function compile() {
 START=$(date +"%s")
-make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
+# make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
+make -j$(nproc) O=out ARCH=arm64 vendor/whyred_defconfig
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
     make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
@@ -154,12 +155,12 @@ curl -s -X POST "https://api.telegram.org/bot$token/sendMessage" \
 for i in "$@"; do
     case $i in
     --oldcam)
-        CONFIG="vendor/whyred_defconfig"
+        CONFIG="whyred_defconfig"
 	TYPE="oldcam"
         shift
         ;;
     --newcam)
-        CONFIG="vendor/whyred-newcam_defconfig"
+        CONFIG="whyred-newcam_defconfig"
 	TYPE="newcam"
         shift
         ;;
