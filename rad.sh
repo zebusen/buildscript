@@ -78,7 +78,8 @@ fi
 # END ///////////////////////
 }
 function cloneAK() {
-git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
+# git clone --depth=1 https://github.com/Reinazhard/AnyKernel3 AnyKernel
+git clone --depth=1 https://github.com/fernandobouchet/AnyKernel3.git AnyKernel
 }
 function modify() {
 # Use for modifications of the kernel like kernel configs
