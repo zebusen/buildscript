@@ -89,10 +89,10 @@ echo "modify configs using sed"
 function compile() {
 START=$(date +"%s")
 # make -j$(nproc) O=out ARCH=arm64 ${CONFIG}
-make -j$(nproc) O=out ARCH=arm64 vendor/whyred_defconfig
+make -j$(nproc) O=out ARCH=arm64 SUBARCH=arm64 vendor/whyred_defconfig
 if [ "${COMPILER}" == "aosp-clang" ]; then
 PATH="$(pwd)/clang"/bin:${PATH} \
-    make -j$(nproc) O=out ARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
+    make -j$(nproc) O=out ARCH=arm64 SUBARCH=arm64 CC="clang" CLANG_TRIPLE="aarch64-linux-gnu-"
 elif [ "${COMPILER}" == "proton-clang" ]; then
     make -j$(nproc) O=out \
     		ARCH=arm64 \
